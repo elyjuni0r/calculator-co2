@@ -1,4 +1,4 @@
-# 🌍 Calculadora de Emissão de CO2
+# Calculadora de Emissão de CO<sub>2</sub> 🌍
 
 > **Status do Projeto:** 🟢 Produção (Deploy via GitHub Actions)  
 > **Acesse agora:** [https://elyjuni0r.github.io/calculator-co2/](https://elyjuni0r.github.io/calculator-co2/)
