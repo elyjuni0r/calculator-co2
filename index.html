@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Calculadora de emissão de CO2 — transforme seus hábitos em impacto ambiental real."
+    />
+    <title>Calculadora de Emissão de CO2</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+
+    <!-- ═══════════════════════════════════════════
+         HEADER
+    ═══════════════════════════════════════════ -->
+    <header class="site-header" role="banner">
+      <div class="site-header__inner">
+        <h3 class="site-header__title">
+          Veja sua Emissão de CO<sub>2</sub>
+          <span class="site-header__title-emoji" aria-hidden="true">🌍</span>
+        </h3>
+        <p class="site-header__subtitle">
+          Transforme seus hábitos em impacto ambiental real
+        </p>
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════
+         MAIN
+    ═══════════════════════════════════════════ -->
+    <main class="main" id="main-content">
+
+      <!-- ── CALCULATOR FORM ────────────────────── -->
+      <section
+        class="calculator"
+        aria-labelledby="calculator-heading"
+      >
+        <h2 class="calculator__heading" id="calculator-heading">
+          Calcule sua emissão
+        </h2>
+
+        <form
+          class="calculator__form"
+          id="calculator-form"
+          novalidate
+          aria-describedby="form-instructions"
+        >
+          <p class="sr-only" id="form-instructions">
+            Preencha os campos abaixo para calcular a emissão de CO2 da sua
+            viagem.
+          </p>
+
+          <!-- Shared datalist (populated by JS) -->
+          <datalist id="cities-list"></datalist>
+
+          <!-- ── Route fields ── -->
+          <fieldset class="calculator__fieldset">
+            <legend class="calculator__legend">Rota</legend>
+
+            <!-- Origin -->
+            <div class="form-field">
+              <label class="form-field__label" for="Origin">
+                Cidade de Origem
+              </label>
+              <input
+                class="form-field__input"
+                type="text"
+                id="Origin"
+                name="origin"
+                list="cities-list"
+                placeholder="Digite a cidade de origem"
+                autocomplete="off"
+                aria-required="true"
+                aria-describedby="origin-hint"
+              />
+              <span class="form-field__hint" id="origin-hint">
+                Comece a digitar para ver sugestões de cidades.
+              </span>
+            </div>
+
+            <!-- Destination -->
+            <div class="form-field">
+              <label class="form-field__label" for="Destination">
+                Cidade de Destino
+              </label>
+              <input
+                class="form-field__input"
+                type="text"
+                id="Destination"
+                name="destination"
+                list="cities-list"
+                placeholder="Digite a cidade de destino"
+                autocomplete="off"
+                aria-required="true"
+                aria-describedby="destination-hint"
+              />
+              <span class="form-field__hint" id="destination-hint">
+                Comece a digitar para ver sugestões de cidades.
+              </span>
+            </div>
+          </fieldset>
+
+          <!-- ── Manual distance ── -->
+          <fieldset class="calculator__fieldset">
+            <legend class="calculator__legend">Distância</legend>
+
+            <div class="form-field form-field--checkbox">
+              <input
+                class="form-field__checkbox"
+                type="checkbox"
+                id="manual-distance"
+                name="manual-distance"
+                aria-describedby="distance-auto-hint"
+              />
+              <label class="form-field__label form-field__label--inline" for="manual-distance">
+                Inserir distância manualmente
+              </label>
+            </div>
+
+            <div class="form-field" id="distance-wrapper" aria-live="polite">
+              <label class="form-field__label" for="distance">
+                Distância (km)
+              </label>
+              <input
+                class="form-field__input"
+                type="number"
+                id="distance"
+                name="distance"
+                min="0"
+                step="0.1"
+                placeholder="Ex.: 150"
+                aria-describedby="distance-auto-hint"
+                disabled
+              />
+              <span class="form-field__hint" id="distance-auto-hint">
+                A distância será preenchida automaticamente
+              </span>
+            </div>
+          </fieldset>
+
+          <!-- ── Transport mode ── -->
+          <fieldset
+            class="calculator__fieldset transport-grid"
+            aria-describedby="transport-hint"
+          >
+            <legend class="calculator__legend">Modo de Transporte</legend>
+            <span class="sr-only" id="transport-hint">
+              Escolha um meio de transporte para o cálculo.
+            </span>
+
+            <div class="transport-grid__options" role="radiogroup" aria-labelledby="transport-label">
+              <span class="sr-only" id="transport-label">Selecione o tipo de transporte</span>
+
+              <!-- Bicicleta -->
+              <label class="transport-grid__option" for="transport-bicicleta">
+                <input
+                  class="transport-grid__radio"
+                  type="radio"
+                  id="transport-bicicleta"
+                  name="transport"
+                  value="Bicicleta"
+                />
+                <span class="transport-grid__card" aria-hidden="false">
+                  <span class="transport-grid__emoji" aria-hidden="true">🚲</span>
+                  <span class="transport-grid__text">Bicicleta</span>
+                </span>
+              </label>
+
+              <!-- Carro (checked by default) -->
+              <label class="transport-grid__option" for="transport-carro">
+                <input
+                  class="transport-grid__radio"
+                  type="radio"
+                  id="transport-carro"
+                  name="transport"
+                  value="carro"
+                  checked
+                />
+                <span class="transport-grid__card" aria-hidden="false">
+                  <span class="transport-grid__emoji" aria-hidden="true">🚗</span>
+                  <span class="transport-grid__text">Carro</span>
+                </span>
+              </label>
+
+              <!-- Ônibus -->
+              <label class="transport-grid__option" for="transport-onibus">
+                <input
+                  class="transport-grid__radio"
+                  type="radio"
+                  id="transport-onibus"
+                  name="transport"
+                  value="onibus"
+                />
+                <span class="transport-grid__card" aria-hidden="false">
+                  <span class="transport-grid__emoji" aria-hidden="true">🚌</span>
+                  <span class="transport-grid__text">Ônibus</span>
+                </span>
+              </label>
+
+              <!-- Caminhão -->
+              <label class="transport-grid__option" for="transport-caminhao">
+                <input
+                  class="transport-grid__radio"
+                  type="radio"
+                  id="transport-caminhao"
+                  name="transport"
+                  value="caminhão"
+                />
+                <span class="transport-grid__card" aria-hidden="false">
+                  <span class="transport-grid__emoji" aria-hidden="true">🚛</span>
+                  <span class="transport-grid__text">Caminhão</span>
+                </span>
+              </label>
+
+            </div><!-- /.transport-grid__options -->
+          </fieldset>
+
+          <!-- ── Submit ── -->
+          <div class="calculator__actions">
+            <button
+              class="btn btn--primary"
+              type="submit"
+              aria-label="Calcular emissão de CO2 com os dados informados"
+            >
+              Calcular Emissão
+            </button>
+          </div>
+
+        </form>
+      </section><!-- /.calculator -->
+
+      <!-- ═══════════════════════════════════════════
+           RESULTS AREA (hidden by default)
+      ═══════════════════════════════════════════ -->
+
+      <!-- Results -->
+      <section
+        class="results hidden"
+        id="results"
+        aria-labelledby="results-heading"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <h2 class="results__heading" id="results-heading">
+          Resultado da Emissão
+        </h2>
+        <div class="results__content" id="results-content"></div>
+      </section>
+
+      <!-- Comparison -->
+      <section
+        class="comparison hidden"
+        id="comparison"
+        aria-labelledby="comparison-heading"
+        aria-live="polite"
+      >
+        <h2 class="comparison__heading" id="comparison-heading">
+          Comparativo de Emissões
+        </h2>
+        <div class="comparison__content" id="comparison-content"></div>
+      </section>
+
+      <!-- Carbon credits -->
+      <section
+        class="carbon-credits hidden"
+        id="carbon-credits"
+        aria-labelledby="carbon-credits-heading"
+        aria-live="polite"
+      >
+        <h2 class="carbon-credits__heading" id="carbon-credits-heading">
+          Créditos de Carbono
+        </h2>
+        <div class="carbon-credits__content" id="carbon-credits-content"></div>
+      </section>
+
+    </main><!-- /.main -->
+
+    <!-- ═══════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════ -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer__inner">
+        <p class="site-footer__credits">
+          Feito com
+          <span aria-label="dedicação " role="img">💖</span>
+          &amp; Por
+          <a
+            class="site-footer__link"
+            href="https://github.com/elyjuni0r"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Perfil do desenvolvedor no GitHub (abre em nova aba)"
+          >
+            @elyjuni0r
+          </a>
+          &nbsp;·&nbsp;
+          <a
+            class="site-footer__link"
+            href="https://linkedin.com/in/elylopesjunior"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Perfil do desenvolvedor no LinkedIn (abre em nova aba)"
+          >
+            LinkedIn
+          </a>
+          &nbsp;·&nbsp;
+          <a
+            class="site-footer__link"
+            href="https://instagram.com/elyjuni0r"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Perfil do desenvolvedor no Instagram (abre em nova aba)"
+          >
+            Instagram
+          </a>
+        </p>
+        <p class="site-footer__tagline">
+          Cada quilômetro consciente é um passo pelo planeta 🌱
+        </p>
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+         SCRIPTS (order matters)
+    ═══════════════════════════════════════════ -->
+    <script src="js/routes-data.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+
+  </body>
+</html>
